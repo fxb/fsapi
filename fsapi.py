@@ -72,7 +72,10 @@ class FSAPI(object):
         r = requests.get('%s/%s' % (self.webfsapi, path), params=params)
         return objectify.fromstring(r.content)
 
-    def __del__(self):
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, value, traceback):
         self.call('DELETE_SESSION')
 
     # Read-only ###################################################################################
