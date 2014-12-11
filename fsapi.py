@@ -91,9 +91,24 @@ class FSAPI(object):
         return self.PLAY_STATES.get(doc.value.u8)
 
     @property
-    def play_info_name(self):
+    def play_info_artist(self):
+        doc = self.call('GET/netRemote.play.info.artist')
+        return doc.value.c8_array.text or ''
+
+    @property
+    def play_info_album(self):
+        doc = self.call('GET/netRemote.play.info.album')
+        return doc.value.c8_array.text or ''
+
+    @property
+    def play_info_track(self):
         doc = self.call('GET/netRemote.play.info.name')
         return doc.value.c8_array.text or ''
+
+    @property
+    def play_info_duration(self):
+        doc = self.call('GET/netRemote.play.info.duration')
+        return doc.value.u32.text or -1
 
     @property
     def play_info_text(self):
